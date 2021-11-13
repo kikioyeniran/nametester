@@ -18,23 +18,36 @@ class Comparisons
     }
 
     public function checkNames(){
-        // $name1 = str_replace(",", "", $this->record_full_name);
         $record_name_array = explode(" ", $this->record_full_name);
         $new_name_array = explode(" ", $this->new_full_name);
+        $counter = 0;
+
         if($record_name_array === $new_name_array){
-            return true;
+            $counter++;
         }
-        elseif(array_diff($record_name_array, $new_name_array) == null){
-            return true;
-        }elseif(!empty(array_intersect($record_name_array, $new_name_array))){
-            return true;
+
+        if(array_diff($record_name_array, $new_name_array) == null){
+            $counter++;
         }
-        else{
-            return false;
+        $array_interesection_value = array_intersect($record_name_array, $new_name_array);
+        if(!empty($array_interesection_value) && array_diff($array_interesection_value, $new_name_array) == null){
+            $counter+=2;
         }
-        // if(count($record_name_array) === count($new_name_array)){
+
+        $percentage_comparison = ($counter/count($record_name_array)) * 100;
+
+        return $percentage_comparison;
+
+        // $array_interesection_value = array_intersect($record_name_array, $new_name_array);
+        // if($record_name_array === $new_name_array){
         //     return true;
-        // }else{
+        // }
+        // elseif(array_diff($record_name_array, $new_name_array) == null){
+        //     return true;
+        // }elseif(!empty($array_interesection_value) && array_diff($array_interesection_value, $new_name_array) == null){
+        //     return true;
+        // }
+        // else{
         //     return false;
         // }
     }
